@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login & Registration</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'style1.css' %}">
+        
+
+    </head>
+    <body>
+        <div class="container d-flex p-8 bd-highlight justify-content-between">
+            <div class="reg">
+                <h2 class="m-3">Registration</h2>
+                <ul>
+                {% if request.session.send == "register" %}
+                {% for message in messages %}
+                    <li style="color: red;">{{message}}</li>
+                {% endfor %}
+                {% endif %}
+                </ul>
+                <form action="/register" method="POST">
+                    {% csrf_token %}
+                    <label for="">First Name</label>
+                    <input type="text" name="first_name" value="{{request.session.first_name}}"><br>
+                    <label for="">Last Name</label>
+                    <input type="text" name="last_name" value="{{request.session.last_name}}"><br>
+                    <label for="">Birthday</label>
+                    <input type="date" name="birthday" value="{{request.session.birthday}}"><br>
+                    <label for="">Email</label>
+                    <input type="text" name="email" value="{{request.session.email}}"><br>
+                    <label for="">Password</label>
+                    <input type="password" name="password"><br>
+                    <label for="">Confirm PW</label>
+                    <input type="password" name="confirm_pw"><br>
+                    <input type="submit" class="btn btn-primary" value="Register">
+                </form>
+            </div>
+            <div class="log">
+                <h2 class="m-3">Login</h2>
+                <ul>
+                    {% if request.session.send == "login" %}
+                    {% for message in messages %}
+                        <li style="color: red;">{{message}}</li>
+                    {% endfor %}
+                    {% endif %}
+                    </ul>
+                <form action="/login" method="POST">
+                    {% csrf_token %}
+                    <label for="">Email</label>
+                    <input type="text" name="email"><br>
+                    <label for="">Password</label>
+                    <input type="password" name="password"><br>
+                    <input type="submit" class="btn btn-primary" value="Log In">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
